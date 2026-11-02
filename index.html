@@ -27,6 +27,7 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 .steps-nav{grid-template-columns:repeat(4,minmax(0,1fr))}.steps-nav:before{right:12.5%;left:12.5%}.field[type=date]{direction:ltr;text-align:right;min-width:0}
 .appointment-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field[type=time]{direction:ltr;text-align:right;min-width:0}
+@media(max-width:600px){.appointment-fields{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -80,7 +81,7 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
    <div><label class="label" for="bookingDate">تاريخ الموعد</label><input id="bookingDate" class="field" type="date" required aria-describedby="dateHelp dateError"></div>
    <div><label class="label" for="bookingTime">وقت الموعد</label><input id="bookingTime" class="field" type="time" required aria-describedby="dateHelp timeError"></div>
   </div>
-  <div class="field-hint" id="dateHelp">اختار اليوم أو بكرة</div><div class="error" id="dateError" aria-live="polite"></div><div class="error" id="timeError" aria-live="polite"></div>
+  <div class="field-hint" id="dateHelp">اختار التاريخ والوقت المناسبين لك</div><div class="error" id="dateError" aria-live="polite"></div><div class="error" id="timeError" aria-live="polite"></div>
   <div class="buttons"><button class="btn btn-outline" id="backToMethods" type="button"><svg><use href="#ic-arrow-right"/></svg> رجوع</button><button class="btn btn-primary" id="generateTicket" type="button">إصدار التذكرة <svg><use href="#ic-ticket"/></svg></button></div>
  </div>
  <div class="screen" data-screen="3" hidden>
@@ -110,13 +111,6 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
  const timeError=document.getElementById('timeError');
  const dateFormatter=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{day:'2-digit',month:'2-digit',year:'numeric'});
  const timeFormatter=new Intl.DateTimeFormat('ar-SA',{hour:'numeric',minute:'2-digit',hour12:true});
- function setDateBounds(){
-  const today=new Date();
-  const tomorrow=new Date(today.getFullYear(),today.getMonth(),today.getDate()+1,12);
-  const localDate=date=>[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
-  dateInput.min=localDate(today);
-  dateInput.max=localDate(tomorrow);
- }
  function selectedDate(){
   if(!dateInput.value)return null;
   const [year,month,day]=dateInput.value.split('-').map(Number);
@@ -128,22 +122,15 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
   timeError.textContent='';timeInput.removeAttribute('aria-invalid');
  }
  function validDate(){
-  setDateBounds();
   if(!dateInput.value||!dateInput.validity.valid){
-   dateError.textContent='يُرجى اختيار تاريخ اليوم أو غدًا فقط.';
+   dateError.textContent='يُرجى اختيار تاريخ صحيح للموعد.';
    dateInput.setAttribute('aria-invalid','true');dateInput.focus();return false;
   }
   dateError.textContent='';dateInput.removeAttribute('aria-invalid');return true;
  }
- setDateBounds();
- dateInput.addEventListener('focus',setDateBounds);
  function validTime(){
   if(!timeInput.value||!timeInput.validity.valid){
    timeError.textContent='يُرجى اختيار وقت صحيح للموعد.';
-   timeInput.setAttribute('aria-invalid','true');timeInput.focus();return false;
-  }
-  if(selectedDate()<=new Date()){
-   timeError.textContent='يُرجى اختيار وقت لاحق للوقت الحالي أو تعديل تاريخ الموعد.';
    timeInput.setAttribute('aria-invalid','true');timeInput.focus();return false;
   }
   timeError.textContent='';timeInput.removeAttribute('aria-invalid');return true;
@@ -172,7 +159,7 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
  nameInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('nextToMethods').click()}});
  nameInput.addEventListener('input',()=>{error.textContent='';nameInput.removeAttribute('aria-invalid')});
  document.getElementById('backToName').addEventListener('click',()=>goTo(0));
- document.getElementById('nextToDate').addEventListener('click',()=>{setDateBounds();goTo(2)});
+ document.getElementById('nextToDate').addEventListener('click',()=>goTo(2));
  document.getElementById('backToMethods').addEventListener('click',()=>goTo(1));
  document.getElementById('generateTicket').addEventListener('click',()=>{
   if(!validName()){goTo(0);return}
