@@ -25,6 +25,8 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
 @media(max-width:940px){.container{padding-inline:22px}.layout{grid-template-columns:1fr;gap:25px;max-width:600px;padding-top:31px;padding-bottom:53px;min-height:auto}.intro h1{font-size:clamp(37px,6vw,50px);line-height:1.4;letter-spacing:-1.5px;margin:12px 0 8px}.intro h1 br{display:none}.intro p{font-size:11px;line-height:2.2;max-width:540px}.intro-note,.illustration{display:none}.form-card{padding:26px 25px}.nav{height:70px}}
 @media(max-width:480px){.container{padding-inline:16px}.nav{height:65px}.brand-icon{width:38px;height:38px;border-radius:11px}.brand-icon svg{height:21px;width:21px}.brand-name{font-size:12px}.brand-en{font-size:8px;letter-spacing:1.8px}.nav-badge{font-size:9px;padding:7px 9px}.layout{padding-top:25px;padding-bottom:35px;gap:20px}.kicker{font-size:10px}.intro h1{font-size:36px;line-height:1.4;margin-top:9px}.intro p{font-size:10px;line-height:2.15}.form-card{padding:23px 18px 22px;border-radius:19px}.card-header{margin-bottom:18px}.steps-nav{margin-bottom:19px}.form-title{font-size:21px}.form-desc{margin-bottom:18px;font-size:10px}.method{padding:10px 9px;gap:9px;min-height:64px}.method-icon{height:37px;width:37px}.method-name{font-size:11px}.method-description{font-size:9px}.buttons{gap:8px;margin-top:21px}.btn{padding:9px 11px;min-height:49px;font-size:11px}.ticket-header{padding:17px 16px 15px}.ticket-main{padding:20px 16px 17px}.ticket-heading{font-size:18px}.ticket-field-value.large{font-size:19px}.barcode{width:96px}.card-footer{margin-top:17px;padding-top:17px}.bottom{height:57px}.bottom span:last-child{font-size:8px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+.steps-nav{grid-template-columns:repeat(4,minmax(0,1fr))}.steps-nav:before{right:12.5%;left:12.5%}.field[type=date]{direction:ltr;text-align:right;min-width:0}
+.appointment-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field[type=time]{direction:ltr;text-align:right;min-width:0}
 </style>
 </head>
 <body>
@@ -49,53 +51,115 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
 <main class="container layout">
 <section class="intro" aria-label="مقدمة الخدمة">
  <div class="kicker"><svg><use href="#ic-spark"/></svg> خدمة حصرية للضحايا المختارين</div>
- <h1>جاهز<br> <em>للطعنة؟</em></h1>
+ <h1>جاهز<br> <em>للطعن؟</em></h1>
  <p>خدمة إلكترونية متكاملة لحجز طعنتك الرمزية، مع حرية اختيار السيناريو. لأن حتى الدراما تستحق تنظيمًا احترافيًا.</p>
  <div class="intro-note"><svg><use href="#ic-lock"/></svg> لا توجد طعنات حقيقية. فقط مزحة ثقيلة قليلًا.</div>
  <div class="illustration" aria-hidden="true"><div class="stamp-label">OFFICIALLY UNOFFICIAL</div><div class="stamp-circles"><svg class="stamp-icon"><use href="#ic-target"/></svg></div><div class="decor-line"></div><span class="decor-arrow">NO REFUNDS. NO ESCAPE.</span></div>
 </section>
 <section class="form-card" id="formCard" aria-label="حجز طعنة رمزية">
  <div class="card-header"><span class="small-code">REQUEST NO. 001</span><span class="header-status"><svg><use href="#ic-file"/></svg><span id="headerState">طلب جديد</span></span></div>
- <nav class="steps-nav" aria-label="مراحل الطلب"><div class="step-indicator current" aria-current="step"><span class="step-dot">01</span><span>بيانات الضحية</span></div><div class="step-indicator"><span class="step-dot">02</span><span>طريقة الطعنة</span></div><div class="step-indicator"><span class="step-dot">03</span><span>التذكرة</span></div></nav>
+ <nav class="steps-nav" aria-label="مراحل الطلب"><div class="step-indicator current" aria-current="step"><span class="step-dot">01</span><span>بيانات الضحية</span></div><div class="step-indicator"><span class="step-dot">02</span><span>طريقة الطعنة</span></div><div class="step-indicator"><span class="step-dot">03</span><span>التاريخ والوقت</span></div><div class="step-indicator"><span class="step-dot">04</span><span>التذكرة</span></div></nav>
  <div class="screen active" data-screen="0">
-  <span class="section-eyebrow">STEP ONE / 01</span><h2 class="form-title" tabindex="-1">مين الضحية المحظوظة؟</h2><p class="form-desc">أولًا، نحتاج اسم الشخص اللي بيحصل على هذه التجربة الاستثنائية.</p>
+  <span class="section-eyebrow">STEP ONE / 01</span><h2 class="form-title" tabindex="-1">بيانات المستفيد من الخدمة</h2><p class="form-desc">أولًا، نحتاج اسم الشخص اللي بيحصل على هذه التجربة الاستثنائية.</p>
   <label class="label" for="victimName">اسم الضحية</label><input id="victimName" class="field" type="text" placeholder="اكتب الاسم هنا" maxlength="45" autocomplete="off" aria-describedby="nameHelp nameError"><div class="field-hint" id="nameHelp">ملاحظة: 3 حروف بدون نقاط.</div><div class="error" id="nameError" aria-live="polite"></div>
   <div class="buttons"><button class="btn btn-primary" id="nextToMethods" type="button">التالي: طريقة الطعنة <svg><use href="#ic-arrow-left"/></svg></button></div>
  </div>
  <div class="screen" data-screen="1" hidden>
-  <span class="section-eyebrow">STEP TWO / 02</span><h2 class="form-title" tabindex="-1">كيف تحب تكون الدراما؟</h2><p class="form-desc">اختر الباقة المناسبة. جميع الخيارات خيالية بالكامل.</p>
+  <span class="section-eyebrow">STEP TWO / 02</span><h2 class="form-title" tabindex="-1">اختيار باقة الخدمة</h2><p class="form-desc">يُرجى اختيار الباقة المناسبة من الخيارات التالية. جميع الباقات مخصصة لأجلك.</p>
   <div class="method-list" role="radiogroup" aria-label="اختيار نوع الطعنة">
    <label class="method"><input type="radio" name="method" value="dramatic" checked><span class="method-icon"><svg><use href="#ic-theater"/></svg></span><span class="method-info"><span class="method-name">الطعنة الدرامية</span><span class="method-description">مشهد مؤثر وموسيقى حزينة من خيالك.</span></span><span class="radio-check"><svg><use href="#ic-check"/></svg></span></label>
    <label class="method"><input type="radio" name="method" value="surprise"><span class="method-icon"><svg><use href="#ic-bell"/></svg></span><span class="method-info"><span class="method-name">الطعنة المفاجئة</span><span class="method-description">بدون موعد مسبق أو حرق للأحداث.</span></span><span class="radio-check"><svg><use href="#ic-check"/></svg></span></label>
    <label class="method"><input type="radio" name="method" value="vip"><span class="method-icon"><svg><use href="#ic-crown"/></svg></span><span class="method-info"><span class="method-name">طعنة VIP</span><span class="method-description">معاملة خاصة مع اعتذار رسمي مؤجّل.</span></span><span class="radio-check"><svg><use href="#ic-check"/></svg></span></label>
    <label class="method"><input type="radio" name="method" value="love"><span class="method-icon"><svg><use href="#ic-heart"/></svg></span><span class="method-info"><span class="method-name">طعنة حب</span><span class="method-description">تتبعها مصالحة وحضن تعويضي.</span></span><span class="radio-check"><svg><use href="#ic-check"/></svg></span></label>
   </div>
-  <div class="buttons"><button class="btn btn-outline" id="backToName" type="button"><svg><use href="#ic-arrow-right"/></svg> رجوع</button><button class="btn btn-primary" id="generateTicket" type="button">إصدار التذكرة <svg><use href="#ic-ticket"/></svg></button></div>
+  <div class="buttons"><button class="btn btn-outline" id="backToName" type="button"><svg><use href="#ic-arrow-right"/></svg> رجوع</button><button class="btn btn-primary" id="nextToDate" type="button">التالي: التاريخ والوقت <svg><use href="#ic-arrow-left"/></svg></button></div>
  </div>
  <div class="screen" data-screen="2" hidden>
-  <span class="section-eyebrow">STEP THREE / 03</span><h2 class="form-title" tabindex="-1">تم اعتماد طعنتك.</h2><p class="form-desc">تهانينا، حجزك مؤكد ولا يمكن الاعتراض عليه.</p>
-  <article class="ticket" aria-label="تذكرة الطعنة الرمزية"><div class="ticket-header"><div><div class="ticket-kicker">OFFICIAL PRANK TICKET</div><div class="ticket-heading">تصريح طعنة</div></div><div class="ticket-badge"><svg><use href="#ic-seal"/></svg></div></div><div class="ticket-cut"></div><div class="ticket-main"><div class="ticket-grid"><div class="ticket-field wide"><div class="ticket-field-label">اسم الضحية المعتمدة</div><div class="ticket-field-value large" id="ticketName"></div></div><div class="ticket-field"><div class="ticket-field-label">نوع الطعنة</div><div class="ticket-field-value" id="ticketMethod"></div></div><div class="ticket-field"><div class="ticket-field-label">تاريخ الاعتماد</div><div class="ticket-field-value" id="ticketDate"></div></div><div class="ticket-field wide"><div class="ticket-field-label">الرقم المرجعي</div><div class="ticket-serial" id="ticketNumber"></div></div></div><div class="ticket-strip"><span class="ticket-status"><svg><use href="#ic-check"/></svg> مؤكدة وغير قابلة للإلغاء</span><span class="barcode" aria-hidden="true"></span></div></div></article>
-  <div class="after-ticket">هذه التذكرة للمزاح فقط، وصلاحيتها تستمر إلى أن نضحك.</div>
+  <span class="section-eyebrow">STEP THREE / 03</span><h2 class="form-title" tabindex="-1">تحديد تاريخ ووقت الخدمة</h2><p class="form-desc">يُرجى اختيار التاريخ والوقت المناسبين للموعد.</p>
+  <div class="appointment-fields">
+   <div><label class="label" for="bookingDate">تاريخ الموعد</label><input id="bookingDate" class="field" type="date" required aria-describedby="dateHelp dateError"></div>
+   <div><label class="label" for="bookingTime">وقت الموعد</label><input id="bookingTime" class="field" type="time" required aria-describedby="dateHelp timeError"></div>
+  </div>
+  <div class="field-hint" id="dateHelp">اختار اليوم أو بكرة</div><div class="error" id="dateError" aria-live="polite"></div><div class="error" id="timeError" aria-live="polite"></div>
+  <div class="buttons"><button class="btn btn-outline" id="backToMethods" type="button"><svg><use href="#ic-arrow-right"/></svg> رجوع</button><button class="btn btn-primary" id="generateTicket" type="button">إصدار التذكرة <svg><use href="#ic-ticket"/></svg></button></div>
+ </div>
+ <div class="screen" data-screen="3" hidden>
+  <span class="section-eyebrow">STEP FOUR / 04</span><h2 class="form-title" tabindex="-1">تم اعتماد طعنتك.</h2><p class="form-desc">تهانينا، حجزك مؤكد ولا يمكن الاعتراض عليه.</p>
+  <article class="ticket" aria-label="تذكرة الطعنة الرمزية"><div class="ticket-header"><div><div class="ticket-kicker">OFFICIAL PRANK TICKET</div><div class="ticket-heading">تصريح طعنة</div></div><div class="ticket-badge"><svg><use href="#ic-seal"/></svg></div></div><div class="ticket-cut"></div><div class="ticket-main"><div class="ticket-grid">
+   <div class="ticket-field wide"><div class="ticket-field-label">اسم الضحية المعتمدة</div><div class="ticket-field-value large" id="ticketName"></div></div>
+   <div class="ticket-field"><div class="ticket-field-label">نوع الطعنة</div><div class="ticket-field-value" id="ticketMethod"></div></div><div class="ticket-field"><div class="ticket-field-label">تاريخ الاعتماد</div><div class="ticket-field-value" id="ticketDate"></div></div>
+   <div class="ticket-field"><div class="ticket-field-label">تاريخ الموعد</div><div class="ticket-field-value" id="ticketBookingDate"></div></div><div class="ticket-field"><div class="ticket-field-label">وقت الموعد</div><div class="ticket-field-value" id="ticketBookingTime"></div></div>
+   <div class="ticket-field wide"><div class="ticket-field-label">الرقم المرجعي</div><div class="ticket-serial" id="ticketNumber"></div></div></div><div class="ticket-strip"><span class="ticket-status"><svg><use href="#ic-check"/></svg> مؤكدة وغير قابلة للإلغاء</span><span class="barcode" aria-hidden="true"></span></div></div></article>
+  <div class="after-ticket">يُرجى إبراز التذكرة لممثل الخدمة عند وصوله.</div>
   <div class="buttons"><button class="btn btn-cancel" id="cancelBooking" type="button"><svg><use href="#ic-x"/></svg> إلغاء الحجز</button><button class="btn btn-outline" id="copyTicket" type="button"><svg><use href="#ic-copy"/></svg> نسخ</button></div><div class="copy-note" id="copyNote" aria-live="polite"></div>
  </div>
- <div class="card-footer"><svg><use href="#ic-lock"/></svg> طلبك سري. الدراما بينكم فقط.</div>
+ <div class="card-footer"><svg><use href="#ic-lock"/></svg> تُعامل بيانات طلبك بسرية تامة.</div>
 </section>
 </main>
-<footer class="container bottom"><span>© قسم الطعنات. إدارة المزح الثقيل.</span><span>100% FICTIONAL / 0% ACTUAL STABBING</span></footer>
-<dialog id="cancelModal" aria-labelledby="cancelTitle" aria-describedby="cancelDesc"><div class="modal-icon"><svg><use href="#ic-x"/></svg></div><h2 class="modal-title" id="cancelTitle">اممممك، ما فيه الغاء</h2><p class="modal-description" id="cancelDesc">تم رفض طلب الإلغاء بشكل نهائي. تذكرتك لازالت سارية، شاكرين لك عدم تفهّمك.</p><button type="button" class="btn btn-primary modal-close" id="closeModal">أوكي خلاص، فهمت <svg><use href="#ic-check"/></svg></button></dialog>
+<footer class="container bottom"><div>© قسم الطعنات.</div></footer>
+<dialog id="cancelModal" aria-labelledby="cancelTitle" aria-describedby="cancelDesc"><div class="modal-icon"><svg><use href="#ic-x"/></svg></div><h2 class="modal-title" id="cancelTitle">اممممك، ما فيه الغاء</h2><p class="modal-description" id="cancelDesc">تم رفض طلب الإلغاء بشكل نهائي. تذكرتك لازالت سارية، شاكرين لك تفهمك.</p><button type="button" class="btn btn-primary modal-close" id="closeModal">أوكي خلاص، فهمت <svg><use href="#ic-check"/></svg></button></dialog>
 <script>
 (()=>{
  const screens=[...document.querySelectorAll('[data-screen]')];
  const indicators=[...document.querySelectorAll('.step-indicator')];
  const nameInput=document.getElementById('victimName');
  const error=document.getElementById('nameError');
+ const dateInput=document.getElementById('bookingDate');
+ const dateError=document.getElementById('dateError');
+ const timeInput=document.getElementById('bookingTime');
+ const timeError=document.getElementById('timeError');
+ const dateFormatter=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{day:'2-digit',month:'2-digit',year:'numeric'});
+ const timeFormatter=new Intl.DateTimeFormat('ar-SA',{hour:'numeric',minute:'2-digit',hour12:true});
+ function setDateBounds(){
+  const today=new Date();
+  const tomorrow=new Date(today.getFullYear(),today.getMonth(),today.getDate()+1,12);
+  const localDate=date=>[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+  dateInput.min=localDate(today);
+  dateInput.max=localDate(tomorrow);
+ }
+ function selectedDate(){
+  if(!dateInput.value)return null;
+  const [year,month,day]=dateInput.value.split('-').map(Number);
+  const [hour,minute]=(timeInput.value||'12:00').split(':').map(Number);
+  return new Date(year,month-1,day,hour,minute);
+ }
+ function clearDateErrors(){
+  dateError.textContent='';dateInput.removeAttribute('aria-invalid');
+  timeError.textContent='';timeInput.removeAttribute('aria-invalid');
+ }
+ function validDate(){
+  setDateBounds();
+  if(!dateInput.value||!dateInput.validity.valid){
+   dateError.textContent='يُرجى اختيار تاريخ اليوم أو غدًا فقط.';
+   dateInput.setAttribute('aria-invalid','true');dateInput.focus();return false;
+  }
+  dateError.textContent='';dateInput.removeAttribute('aria-invalid');return true;
+ }
+ setDateBounds();
+ dateInput.addEventListener('focus',setDateBounds);
+ function validTime(){
+  if(!timeInput.value||!timeInput.validity.valid){
+   timeError.textContent='يُرجى اختيار وقت صحيح للموعد.';
+   timeInput.setAttribute('aria-invalid','true');timeInput.focus();return false;
+  }
+  if(selectedDate()<=new Date()){
+   timeError.textContent='يُرجى اختيار وقت لاحق للوقت الحالي أو تعديل تاريخ الموعد.';
+   timeInput.setAttribute('aria-invalid','true');timeInput.focus();return false;
+  }
+  timeError.textContent='';timeInput.removeAttribute('aria-invalid');return true;
+ }
+ timeInput.addEventListener('input',()=>{timeError.textContent='';timeInput.removeAttribute('aria-invalid')});
+ timeInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('generateTicket').click()}});
+ dateInput.addEventListener('input',clearDateErrors);
+ dateInput.addEventListener('change',clearDateErrors);
+ dateInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('generateTicket').click()}});
  const modal=document.getElementById('cancelModal');
  const methodNames={dramatic:'الطعنة الدرامية',surprise:'الطعنة المفاجئة',vip:'طعنة VIP',love:'طعنة حب'};
  let ticketNo='';
  function goTo(i){
   screens.forEach((el,n)=>{const active=n===i;el.hidden=!active;el.classList.toggle('active',active)});
   indicators.forEach((el,n)=>{el.classList.toggle('current',n===i);el.classList.toggle('done',n<i);el.setAttribute('aria-current',n===i?'step':'false');el.querySelector('.step-dot').innerHTML=n<i?'<svg aria-hidden="true"><use href="#ic-check"></use></svg>':'0'+(n+1)});
-  document.getElementById('headerState').textContent=i===2?'تم الاعتماد':'طلب جديد';
+  document.getElementById('headerState').textContent=i===3?'تم الاعتماد':'طلب جديد';
   screens[i].querySelector('.form-title').focus({preventScroll:true});
   if(window.matchMedia('(max-width:940px)').matches)document.getElementById('formCard').scrollIntoView({behavior:'smooth',block:'start'});
  }
@@ -108,21 +172,27 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
  nameInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('nextToMethods').click()}});
  nameInput.addEventListener('input',()=>{error.textContent='';nameInput.removeAttribute('aria-invalid')});
  document.getElementById('backToName').addEventListener('click',()=>goTo(0));
+ document.getElementById('nextToDate').addEventListener('click',()=>{setDateBounds();goTo(2)});
+ document.getElementById('backToMethods').addEventListener('click',()=>goTo(1));
  document.getElementById('generateTicket').addEventListener('click',()=>{
   if(!validName()){goTo(0);return}
+  if(!validDate())return;
+  if(!validTime())return;
   const selected=document.querySelector('input[name="method"]:checked').value;
   ticketNo='STB-'+String(Math.floor(100000+Math.random()*900000));
   document.getElementById('ticketName').textContent=nameInput.value.trim();
   document.getElementById('ticketMethod').textContent=methodNames[selected];
-  document.getElementById('ticketDate').textContent=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date());
+  document.getElementById('ticketDate').textContent=dateFormatter.format(new Date());
+  document.getElementById('ticketBookingDate').textContent=dateFormatter.format(selectedDate());
+  document.getElementById('ticketBookingTime').textContent=timeFormatter.format(selectedDate());
   document.getElementById('ticketNumber').textContent=ticketNo;
-  document.getElementById('copyNote').textContent='';goTo(2);
+  document.getElementById('copyNote').textContent='';goTo(3);
  });
  document.getElementById('cancelBooking').addEventListener('click',()=>{if(typeof modal.showModal==='function')modal.showModal();else alert('اممممك، ما فيه الغاء')});
  document.getElementById('closeModal').addEventListener('click',()=>modal.close());
  modal.addEventListener('click',e=>{if(e.target===modal)modal.close()});
  document.getElementById('copyTicket').addEventListener('click',async()=>{
-  const message=`تصريح طعنة - مزحة فقط\nاسم الضحية: ${nameInput.value.trim()}\nالنوع: ${document.getElementById('ticketMethod').textContent}\nالرقم المرجعي: ${ticketNo}\nالحالة: مؤكدة وغير قابلة للإلغاء`;
+  const message=`تصريح طعنة - مزحة فقط\nاسم الضحية: ${nameInput.value.trim()}\nالنوع: ${document.getElementById('ticketMethod').textContent}\nتاريخ الموعد: ${document.getElementById('ticketBookingDate').textContent}\nوقت الموعد: ${document.getElementById('ticketBookingTime').textContent}\nالرقم المرجعي: ${ticketNo}\nالحالة: مؤكدة وغير قابلة للإلغاء`;
   try{await navigator.clipboard.writeText(message);document.getElementById('copyNote').textContent='تم نسخ بيانات التذكرة.'}
   catch(err){const text=document.createElement('textarea');text.value=message;document.body.appendChild(text);text.select();const ok=document.execCommand('copy');text.remove();document.getElementById('copyNote').textContent=ok?'تم نسخ بيانات التذكرة.':'تعذر النسخ، يمكنك تصوير التذكرة.'}
  });
