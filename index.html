@@ -25,8 +25,13 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
 @media(max-width:940px){.container{padding-inline:22px}.layout{grid-template-columns:1fr;gap:25px;max-width:600px;padding-top:31px;padding-bottom:53px;min-height:auto}.intro h1{font-size:clamp(37px,6vw,50px);line-height:1.4;letter-spacing:-1.5px;margin:12px 0 8px}.intro h1 br{display:none}.intro p{font-size:11px;line-height:2.2;max-width:540px}.intro-note,.illustration{display:none}.form-card{padding:26px 25px}.nav{height:70px}}
 @media(max-width:480px){.container{padding-inline:16px}.nav{height:65px}.brand-icon{width:38px;height:38px;border-radius:11px}.brand-icon svg{height:21px;width:21px}.brand-name{font-size:12px}.brand-en{font-size:8px;letter-spacing:1.8px}.nav-badge{font-size:9px;padding:7px 9px}.layout{padding-top:25px;padding-bottom:35px;gap:20px}.kicker{font-size:10px}.intro h1{font-size:36px;line-height:1.4;margin-top:9px}.intro p{font-size:10px;line-height:2.15}.form-card{padding:23px 18px 22px;border-radius:19px}.card-header{margin-bottom:18px}.steps-nav{margin-bottom:19px}.form-title{font-size:21px}.form-desc{margin-bottom:18px;font-size:10px}.method{padding:10px 9px;gap:9px;min-height:64px}.method-icon{height:37px;width:37px}.method-name{font-size:11px}.method-description{font-size:9px}.buttons{gap:8px;margin-top:21px}.btn{padding:9px 11px;min-height:49px;font-size:11px}.ticket-header{padding:17px 16px 15px}.ticket-main{padding:20px 16px 17px}.ticket-heading{font-size:18px}.ticket-field-value.large{font-size:19px}.barcode{width:96px}.card-footer{margin-top:17px;padding-top:17px}.bottom{height:57px}.bottom span:last-child{font-size:8px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-.steps-nav{grid-template-columns:repeat(4,minmax(0,1fr))}.steps-nav:before{right:12.5%;left:12.5%}.field[type=date]{direction:ltr;text-align:right;min-width:0}
-.appointment-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field[type=time]{direction:ltr;text-align:right;min-width:0}
+.steps-nav{grid-template-columns:repeat(4,minmax(0,1fr))}.steps-nav:before{right:12.5%;left:12.5%}
+.appointment-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.appointment-fields>div{min-width:0}
+/* Keep padding on the wrapper: iOS temporal inputs can add it outside width:100%. */
+.temporal-field{display:flex;align-items:center;min-width:0;max-width:100%;overflow:hidden}
+.temporal-field:focus-within{border-color:var(--red);box-shadow:0 0 0 4px rgba(185,28,28,.08)}.temporal-field:has([aria-invalid=true]){border-color:var(--red)}
+.temporal-input{display:block;box-sizing:border-box;width:100%;max-width:100%;min-width:0;height:100%;margin:0;padding:0;border:0;border-radius:0;background:transparent;color:var(--ink);font:inherit;font-size:16px;direction:ltr;text-align:right;-webkit-appearance:none;appearance:none}
+.temporal-input:focus{outline:none}.temporal-input::-webkit-date-and-time-value{min-height:1.5em;text-align:right}
 @media(max-width:600px){.appointment-fields{grid-template-columns:1fr}}
 </style>
 </head>
@@ -78,8 +83,8 @@ dialog{border:none;margin:auto;max-width:min(405px,calc(100% - 36px));width:100%
  <div class="screen" data-screen="2" hidden>
   <span class="section-eyebrow">STEP THREE / 03</span><h2 class="form-title" tabindex="-1">تحديد تاريخ ووقت الخدمة</h2><p class="form-desc">يُرجى اختيار التاريخ والوقت المناسبين للموعد.</p>
   <div class="appointment-fields">
-   <div><label class="label" for="bookingDate">تاريخ الموعد</label><input id="bookingDate" class="field" type="date" required aria-describedby="dateHelp dateError"></div>
-   <div><label class="label" for="bookingTime">وقت الموعد</label><input id="bookingTime" class="field" type="time" required aria-describedby="dateHelp timeError"></div>
+   <div><label class="label" for="bookingDate">تاريخ الموعد</label><div class="field temporal-field"><input id="bookingDate" class="temporal-input" type="date" required aria-describedby="dateHelp dateError"></div></div>
+   <div><label class="label" for="bookingTime">وقت الموعد</label><div class="field temporal-field"><input id="bookingTime" class="temporal-input" type="time" required aria-describedby="dateHelp timeError"></div></div>
   </div>
   <div class="field-hint" id="dateHelp">اختار التاريخ والوقت المناسبين لك</div><div class="error" id="dateError" aria-live="polite"></div><div class="error" id="timeError" aria-live="polite"></div>
   <div class="buttons"><button class="btn btn-outline" id="backToMethods" type="button"><svg><use href="#ic-arrow-right"/></svg> رجوع</button><button class="btn btn-primary" id="generateTicket" type="button">إصدار التذكرة <svg><use href="#ic-ticket"/></svg></button></div>
